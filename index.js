@@ -41,11 +41,10 @@ function chunkArray(myArray, size){
   while(myArray.length){
       result.push(myArray.splice(0, size));
   }
-  console.log("chunk", result);
+  console.log(result);
 }
 
-chunkArray([1,2,3,4,5,6,7,8], 3);
-
+//chunkArray([1,2,3,4,5,6,7,8], 3);
 var Person = function() {};
 
 Person.prototype.initialize = function(name) 
@@ -58,7 +57,7 @@ Person.prototype.describe = function(){
 var Teacher = function() {};
 Teacher.prototype = new Person();
 Teacher.prototype.teach = function(subject) {
-  console.log(this.name + " is now teaching "+ subject);
+  console.log(this.name + " is now teaching "+ this.subject);
 }
 
 var me = new Teacher();
@@ -68,40 +67,29 @@ me.teach("Javascript");
 
 const arr = [1,[2],[3,4,[5]], [6,[7,[8],9]]];
 const flatArray = arr.flat(Infinity);
-console.log(flatArray);
+//console.log(flatArray);
 
 
 
 
-function displayPyramid(rows) {
-   for(let i = 1; i <= rows; i++){
-     let str = '';
-     
-     //Add the white space to the left
-     for(let k = 1; k <= (rows - i); k++){
-       str += '\xa0\xa0';
-     }
-     
-     //Add the '#' for each row
-     for(let j = 0; j != (2 * i - 1); j++){
-       str += ' # ';
-     }
-     
-     //Add the white space to the right
-     for(let k =  i + 1; k <= rows; k++){
-       str += ' ';
-     }
-     
-      //Print the pyramid pattern for each row
-     console.log(str);
-   }
+function displayPyramid(n) {
+  for (var i = 0; i < n; i++) {
+    var str = '';
+    for (var j = 1; j < n-i; j++) {
+      str = str + ' ';
+    }
+    for (var k = 1; k <= (2*i+1); k++) {
+      str = str + '#';
+    }
+    console.log(str);
+  }
 };
 //displayPyramid(10);
 
 function layerTopRight (matrix){
   var top = matrix.splice(0,1);
   var right = [];
-  for(var i=0;i<=matrix.length;i++){
+  for(var i=0;i<matrix.length;i++){
     var e = matrix[i].splice(-1,1);
     console.log(e);
     right.push(e);
@@ -157,17 +145,14 @@ function permute (alphabets, startIndex, endIndex) {
       swap(alphabets, i, startIndex); // backtrack
     }
   }
- return console.log(alphabets);
+ // return console.log(alphabets);
 }
 
 var alphabets = ['1','2','3'];
-permute(alphabets, 0, alphabets.length-1); // ABC, ACB, BAC, BCA, CBA, CAB
+//permute(alphabets, 0, alphabets.length-1); // ABC, ACB, BAC, BCA, CBA, CAB
 
 
-
-//if 2+1 = 3 check 3 exist in an array or not
-let input = [3,1,78,2]//true
-let input = [7,1,78,2]//false coz 2+1 =3 or 7+1=8 didnt exist in an array
+let input = [3,1,78,2]
 
 function findExistenceOfSum(inputArr){
   let total = inputArr.length;
@@ -187,7 +172,6 @@ function findExistenceOfSum(inputArr){
 }
 
 findExistenceOfSum(input);
-
 
 function pallindrome(str){
   var cstr = str.toLowerCase().replace(/[^a-zA-Z0-9]+/g,'');
@@ -313,6 +297,33 @@ function calArr(arr){
 calArr([0,0,0,0,25]);
 
 
+function displayPyramid(rows) {
+   for(let i = 1; i <= rows; i++){
+     let str = '';
+     
+     //Add the white space to the left
+     for(let k = 1; k <= (rows - i); k++){
+       str += '\xa0\xa0';
+     }
+     
+     //Add the '#' for each row
+     for(let j = 0; j != (2 * i - 1); j++){
+       str += ' # ';
+     }
+     
+     //Add the white space to the right
+     for(let k =  i + 1; k <= rows; k++){
+       str += ' ';
+     }
+     
+      //Print the pyramid pattern for each row
+     console.log(str);
+   }
+};
+//displayPyramid(10);
+
+
+
 function bubbleSort(arr){
    var len = arr.length;
    for (var i = len-1; i>=0; i--){
@@ -329,3 +340,144 @@ function bubbleSort(arr){
 bubbleSort([7,5,2,4,3,9]); //[2, 3, 4, 5, 7, 9]
 bubbleSort([9,7,5,4,3,1]); //[1, 3, 4, 5, 7, 9]
 bubbleSort([1,2,3,4,5,6]); //[1, 2, 3, 4, 5, 6]
+
+function selectionSort(arr){
+  var minIdx, temp, 
+      len = arr.length;
+  for(var i = 0; i < len; i++){
+    minIdx = i;
+    for(var  j = i+1; j<len; j++){
+       if(arr[j]<arr[minIdx]){
+          minIdx = j;
+       }
+    }
+    temp = arr[i];
+    arr[i] = arr[minIdx];
+    arr[minIdx] = temp;
+  }
+  return arr;
+}
+
+function insertionSort(arr){
+  var i, len = arr.length, el, j;
+
+  for(i = 1; i<len; i++){
+    el = arr[i];
+    j = i;
+
+    while(j>0 && arr[j-1]>toInsert){
+      arr[j] = arr[j-1];
+      j--;
+   }
+
+   arr[j] = el;
+  }
+
+  return arr;
+}
+
+function mergeSort(arr){
+   var len = arr.length;
+   if(len <2)
+      return arr;
+   var mid = Math.floor(len/2),
+       left = arr.slice(0,mid),
+       right =arr.slice(mid);
+   //send left and right to the mergeSort to broke it down into pieces
+   //then merge those
+   return merge(mergeSort(left),mergeSort(right));
+}
+
+
+function merge(left, right){
+  var result = [],
+      lLen = left.length,
+      rLen = right.length,
+      l = 0,
+      r = 0;
+  while(l < lLen && r < rLen){
+     if(left[l] < right[r]){
+       result.push(left[l++]);
+     }
+     else{
+       result.push(right[r++]);
+    }
+  }  
+  //remaining part needs to be addred to the result
+  return result.concat(left.slice(l)).concat(right.slice(r));
+}
+
+//quick sort start
+function quickSort(arr, left, right){
+   var len = arr.length, 
+   pivot,
+   partitionIndex;
+
+
+  if(left < right){
+    pivot = right;
+    partitionIndex = partition(arr, pivot, left, right);
+    
+   //sort left and right
+   quickSort(arr, left, partitionIndex - 1);
+   quickSort(arr, partitionIndex + 1, right);
+  }
+  return arr;
+}
+        
+		
+function partition(arr, pivot, left, right){
+   var pivotValue = arr[pivot],
+       partitionIndex = left;
+
+   for(var i = left; i < right; i++){
+    if(arr[i] < pivotValue){
+      swap(arr, i, partitionIndex);
+      partitionIndex++;
+    }
+  }
+  swap(arr, right, partitionIndex);
+  return partitionIndex;
+}
+
+function swap(arr, i, j){
+   var temp = arr[i];
+   arr[i] = arr[j];
+   arr[j] = temp;
+}
+
+//quick sort end
+
+
+//linear search
+var rainbow = ["blue", "green", "indigo", "orange", "red", "violet", "yellow"];
+function linearSearch(arr, elToFind) {
+  for (var i=0; i<arr.length; i++) {
+    if (arr[i] == elToFind) {
+      return i;
+    }
+  } return null;
+}
+
+linearSearch(rainbow, "green"); // returns 3
+linearSearch(rainbow, "white"); // returns null
+
+
+function binarySearch(sortedArray, elToFind) {
+  var lowIndex = 0;
+  var highIndex = sortedArray.length - 1;
+  while (lowIndex <= highIndex) {
+    var midIndex = Math.floor((lowIndex + highIndex) / 2);
+    if (sortedArray[midIndex] == elToFind) {
+      return midIndex;
+    } else if (sortedArray[midIndex] < elToFind) {
+      lowIndex = midIndex + 1;
+    } else {
+      highIndex = midIndex - 1;
+    }
+  } return null;
+}
+
+var sortedRainbow = ["blue", "green", "indigo", "orange", "red", "violet", "yellow"];
+binarySearch(sortedRainbow, "green"); // returns 1
+binarySearch(sortedRainbow, "white") // returns null
